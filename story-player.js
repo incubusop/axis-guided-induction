@@ -154,7 +154,11 @@
       el.classList.toggle('is-active', isCurrent);
       if (isCurrent) el.setAttribute('aria-current', 'step'); else el.removeAttribute('aria-current');
     });
-    if ((options.scroll || options.audioSync) && section.showCard !== false) document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if ((options.scroll || options.audioSync) && section.showCard !== false) {
+      const phone = document.querySelector(`[data-phone-scene="${safeIndex}"]`);
+      const target = phone && window.matchMedia('(max-width: 600px)').matches ? phone : document.getElementById(section.id);
+      target?.scrollIntoView({ behavior: 'smooth', block: phone && target === phone ? 'center' : 'start' });
+    }
   }
 
   function setCaption(text) {
