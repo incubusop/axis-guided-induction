@@ -1,22 +1,248 @@
-(() => {
-const steps=[{title:'Welcome & our values',short:'Welcome & values',icon:'✦',intro:'A first look at the principles that shape a thoughtful employee and customer experience.',guide:'Hello, and welcome. I’m Aanya. I’ll walk alongside you through your induction, at a pace that feels comfortable. We’ll begin with a short introduction, then take each onboarding module one step at a time.'},{title:'Account Opening',short:'Account Opening',icon:'◈',intro:'Example fields to help you prepare. Use the official process for actual account information.',guide:'We’ll start with account opening. I’ll show you example details that may be requested. Please do not enter real account numbers or sensitive information here.',fields:[['Account type','select','Salary account|Existing Axis Bank account'],['Preferred branch','text','Example: Central Avenue'],['Already hold an Axis Bank account?','select','Yes|No'],['Documents to have ready','text','Example: approved identity documents']]},{title:'Mediclaim',short:'Mediclaim',icon:'♡',intro:'Example coverage choices to help prepare for a benefits conversation. Confirm plan details with HR.',guide:'Next is Mediclaim. We’ll walk through example coverage choices and details you might need to confirm. Ask HR if anything is unclear.',fields:[['Coverage choice','select','Employee only|Employee and family'],['Number of dependants','select','None|1|2|3 or more'],['Relationship details to confirm','text','Example: spouse, child, parent'],['Questions for HR','text','Example question (optional)']]},{title:'Nomination',short:'Nomination',icon:'♧',intro:'Nomination is mandatory for relevant benefits. Complete the official TSR Portal process and retain its request number.',guide:'Nomination is a required part of onboarding. We’ll review the official route together. Please check current timing with HR.',fields:[['Marital status','select','Single|Married|Other / discuss with HR'],['Number of nominees','select','1|2|3'],['Categories to review','checks','Provident Fund (PF)|Gratuity|Group Term Life Insurance (GTLI)']]},{title:'One Axis',short:'One Axis',icon:'◉',intro:'Note what you would like to explore and confirm access with your team or HR.',guide:'Finally, One Axis. This section helps you note what you would like to explore and whether you need help with access.',fields:[['Access status','select','I have access|I need help getting access'],['Topics to explore','select','Employee resources|Learning and development|Team and culture|Introduction'],['Person to ask','text','Example: manager or HR contact']]}];
-const $=x=>document.getElementById(x), ids=['sectionKicker','sectionTitle','sectionSubtitle','sectionTime','stepDots','stepContent','journeyNav','journeyCount','backBtn','nextBtn','guideScript','playVoice','playIcon','playLabel','repeatVoice','muteVoice','voiceWave','toast'],e={};ids.forEach(x=>e[x.replace(/[A-Z]/g,c=>c.toLowerCase())]=$(x));
-const S={section:0,step:0,answers:{},done:new Set(),muted:false,speaking:false,paused:false};let timer;
-function note(t){e.toast.textContent=t;e.toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>e.toast.classList.remove('show'),2300)}
-function guideText(){if(!S.section)return S.step===0?steps[0].guide:S.step===1?'At Axis Bank, your work connects people, businesses and communities. We’ll explore customer care, trust, collaboration and continuous learning. Refer to official induction materials for approved policy wording.':'That’s the introduction complete. Take your time with each module and use official HR guidance for real forms.';if(S.step===0)return steps[S.section].guide;if(S.step===1)return 'Now we’ll complete the example '+steps[S.section].title+' fields together. Please use sample information only. Nothing is saved or sent.';if(S.step===2)return 'Let’s review these example details. They stay only in this browser tab and are not submitted.';return 'You have finished the '+steps[S.section].title+' demo section. No information was sent or stored.'}
-function render(){const s=steps[S.section],wel=S.section===0,total=wel?3:4;e.sectionkicker.textContent=wel?'START HERE':'MODULE 0'+S.section+' · '+s.title.toUpperCase();e.sectiontitle.textContent=wel?['A warm welcome, and a clear path.','How we work, together.','You’re ready to begin.'][S.step]:[s.title,'Try the example fields.','Take a moment to review.','That’s this demo section complete.'][S.step];e.sectionsubtitle.textContent=wel?['Get to know the way we work, then move through onboarding with support at every step.','A people-first introduction to the culture and purpose you’ll be part of.','Aanya will stay with you throughout each module.'][S.step]:s.intro;e.sectiontime.textContent=S.step===2&&!wel?'Review':S.step===3?'Complete':'3 min';e.guidescript.textContent=guideText();e.journeycount.textContent='0'+(S.section+1)+' / 05';e.stepdots.innerHTML=Array.from({length:total},(_,i)=>'<span class="step-dot '+(i===S.step?'active':i<S.step?'past':'')+'"></span>').join('');e.stepdots.setAttribute('aria-label','Step '+(S.step+1)+' of '+total);
-if(wel&&S.step===0)e.stepcontent.innerHTML='<div class="step-heading"><span class="step-icon">✦</span><div><h3>Welcome to your new beginning.</h3><p>We’re glad you’re here. This guided experience makes first steps clear.</p></div></div><div class="step-content"><p>We’ll start with a short introduction to Axis Bank, then Aanya will guide you through four onboarding modules with example fields.</p><div class="info-note">Demo only. Please do not enter real personal, account, medical or nominee information.</div></div>';
-else if(wel&&S.step===1)e.stepcontent.innerHTML='<div class="step-heading"><span class="step-icon">◇</span><div><h3>Our work is built on trust.</h3><p>A people-first introduction to the culture you’ll be part of.</p></div></div><div class="step-content"><p>Every role contributes to the experience we create for customers and one another. Teams build confidence, support progress and create value in the communities we serve.</p><div class="value-grid"><div class="value-card"><div class="value-icon">♡</div><strong>Care for customers</strong><span>Listen closely and make interactions thoughtful.</span></div><div class="value-card"><div class="value-icon">✧</div><strong>Earn trust</strong><span>Act responsibly and keep commitments clear.</span></div><div class="value-card"><div class="value-icon">↗</div><strong>Grow together</strong><span>Share knowledge and keep learning.</span></div></div><div class="info-note">General orientation only. Follow official Axis Bank values materials.</div></div>';
-else if(wel)e.stepcontent.innerHTML='<div class="step-heading"><span class="step-icon">✓</span><div><h3>Your induction path is ready.</h3><p>Move through each module at a comfortable pace.</p></div></div><div class="step-content"><p>Account Opening, Mediclaim, Nomination and One Axis. You can revisit completed steps.</p></div>';
-else if(S.step===0)e.stepcontent.innerHTML='<div class="step-heading"><span class="step-icon">'+s.icon+'</span><div><h3>A quick look at '+s.title+'.</h3><p>First, let’s understand what this section covers.</p></div></div><div class="step-content"><p>'+s.intro+'</p>'+(S.section===3?'<ol class="process-list"><li>Open the official TSR Portal.</li><li>Choose Retirement Benefits.</li><li>Open Nominations, then Employee Nominee Request.</li><li>Submit applicable PF, Gratuity and GTLI nominations.</li><li>Keep the Nomination Request Number.</li></ol><div class="info-note">Nomination is mandatory. Confirm current timing with HR.</div>':'')+'<div class="info-note">These are examples only. Follow official HR instructions.</div></div>';
-else if(S.step===1)e.stepcontent.innerHTML='<div class="step-heading"><span class="step-icon">'+s.icon+'</span><div><h3>Try the example fields.</h3><p>Use sample details only. Required items are marked.</p></div></div><div class="step-content"><div class="demo-label">DEMO FIELDS · NOT AN OFFICIAL FORM</div><form id="demoForm" novalidate><div class="form-grid">'+s.fields.map((f,i)=>'<div class="field"><label for="f'+i+'">'+f[0]+' *</label>'+(f[1]==='checks'?'<div class="choice-row">'+f[2].split('|').map(v=>'<button class="choice-chip" type="button" data-check="'+i+'" aria-pressed="false">'+v+'</button>').join('')+'</div>':f[1]==='select'?'<select id="f'+i+'" required><option value="">Choose one</option>'+f[2].split('|').map(v=>'<option>'+v+'</option>').join('')+'</select>':'<input id="f'+i+'" required placeholder="'+f[2]+'">')+'</div>').join('')+'</div><div class="info-note">Do not enter real personal, financial, health or nominee information. Nothing is saved or sent.</div></form></div>';
-else if(S.step===2)e.stepcontent.innerHTML='<div class="step-heading"><span class="step-icon">⌕</span><div><h3>Review your example details.</h3><p>Nothing will be submitted or saved.</p></div></div><div class="step-content"><div class="review-list">'+s.fields.map((f,i)=>'<div class="review-row"><span>'+f[0]+'</span><span>'+(S.answers[S.section+'-'+i]||'Not provided')+'</span></div>').join('')+'</div><div class="info-note">Continue to mark this demo section complete on screen only.</div></div>';
-else e.stepcontent.innerHTML='<div class="step-heading"><span class="step-icon">✓</span><div><h3>'+s.title+' overview completed.</h3><p>You can continue to the next module.</p></div></div><div class="complete-panel"><span class="check-circle">✓</span><div><strong>Demo section complete</strong><span>Nothing was sent to Axis Bank, HR or any external service.</span></div></div>';
-e.backbtn.disabled=!S.section&&!S.step;e.nextbtn.innerHTML=S.step===total-1?(S.section===4?'Finish induction <span>✓</span>':'Continue journey <span>→</span>'):S.step===2?'Confirm demo step <span>→</span>':!S.step&&wel?'Let’s begin <span>→</span>':'Continue <span>→</span>';
-e.journeynav.innerHTML=steps.map((x,i)=>'<button type="button" class="journey-item '+(i===S.section?'active ':'')+(S.done.has(i)?'done':'')+'" data-to="'+i+'" '+(i>S.section?'disabled':'')+'><span class="nav-number">'+(S.done.has(i)?'✓':'0'+(i+1))+'</span><span class="nav-label">'+x.short+'</span></button>').join('');e.journeynav.querySelectorAll('[data-to]').forEach(b=>b.onclick=()=>{if(!b.disabled){S.section=+b.dataset.to;S.step=0;render()}});
-e.stepcontent.querySelectorAll('input,select').forEach((el,i)=>{el.value=S.answers[S.section+'-'+i]||'';el.oninput=el.onchange=()=>S.answers[S.section+'-'+i]=el.value});e.stepcontent.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>{b.classList.toggle('selected');b.setAttribute('aria-pressed',b.classList.contains('selected'));S.answers[S.section+'-'+b.dataset.check]=b.classList.contains('selected')?b.textContent:''})}
-function stop(){if('speechSynthesis'in window)speechSynthesis.cancel();S.speaking=false;S.paused=false;e.voicewave.classList.remove('speaking');e.playicon.textContent='▶';e.playlabel.textContent='Listen to Aanya'}
-function speak(){if(S.muted){note('Narration is muted. Turn sound on to listen.');return}if(!('speechSynthesis'in window)){note('Speech is unavailable. Captions remain on.');return}if(S.speaking&&!S.paused){speechSynthesis.pause();S.paused=true;e.playlabel.textContent='Resume narration';e.playicon.textContent='▶';return}if(S.paused){speechSynthesis.resume();S.paused=false;e.playlabel.textContent='Pause narration';e.playicon.textContent='Ⅱ';return}stop();const u=new SpeechSynthesisUtterance(e.guidescript.textContent);u.rate=.87;u.pitch=.82;const v=speechSynthesis.getVoices().find(x=>/en-IN/i.test(x.lang))||speechSynthesis.getVoices().find(x=>/^en/i.test(x.lang));if(v)u.voice=v;u.onstart=()=>{S.speaking=true;e.voicewave.classList.add('speaking');e.playicon.textContent='Ⅱ';e.playlabel.textContent='Pause narration'};u.onend=u.onerror=stop;speechSynthesis.speak(u)}
-e.backbtn.onclick=()=>{if(S.step)S.step--;else if(S.section){S.section--;S.step=steps[S.section].fields?3:2}stop();render()};e.nextbtn.onclick=()=>{stop();if(S.section&&S.step===1){for(let i=0;i<steps[S.section].fields.length;i++)if(!S.answers[S.section+'-'+i]){note('Please complete the required example fields.');e.stepcontent.querySelector('input,select')?.focus();return}}const last=S.section?3:2;if(S.step<last){S.step++;render()}else if(S.section<4){S.done.add(S.section);S.section++;S.step=0;render()}else note('You’ve reached the end of the guided induction. Well done.')};
-e.playvoice.onclick=speak;e.repeatvoice.onclick=()=>{stop();speak()};e.mutevoice.onclick=()=>{S.muted=!S.muted;e.mutevoice.classList.toggle('is-active',S.muted);e.mutevoice.setAttribute('aria-label',S.muted?'Turn narration sound on':'Mute narration');if(S.muted)stop()};$('contrastBtn').onclick=()=>document.body.classList.toggle('high-contrast');$('helpLink').onclick=x=>{x.preventDefault();note('Please contact your Axis Bank HR representative for official help.')};window.addEventListener('beforeunload',stop);render()
-})();
+window.AXIS_STORY = {
+  id: 'one-axis',
+  defaultImage: 'assets/one-axis-features.png',
+  idleCaption: 'Press play to follow the One Axis setup guide.',
+  endCaption: 'Your One Axis setup is now complete. Welcome aboard.',
+  totalLabel: '09',
+  parts: ['assets/oneaxis-part1.wav', 'assets/oneaxis-part2.wav'],
+  // Scene boundaries supplied against each audio file's own clock (seconds).
+  sceneTimings: {
+    introduction: { part: 0, start: 0, end: 19 },
+    intune: { part: 0, start: 19, end: 44 },
+    'first-registration': { part: 0, start: 44, end: 90 },
+    'new-device': { part: 0, start: 90, end: 124 },
+    access: { part: 0, start: 124, end: 145 },
+    'employee-services': [
+      { part: 0, start: 145, end: 152 },
+      { part: 1, start: 0, end: 44 }
+    ],
+    attendance: { part: 1, start: 44, end: 114 },
+    policies: { part: 1, start: 114, end: 142 },
+    complete: { part: 1, start: 142, end: 148 }
+  },
+  sections: [
+    {
+      id: 'introduction', index: 0, number: '01', kicker: 'WELCOME TO ONE AXIS', navTitle: 'Introduction', title: 'Your employee companion.', heroTitle: 'One Axis,<br><em>step by step.</em>', heroKicker: 'THE PRACTICAL GUIDE', heroDeck: 'Welcome to the One Axis application setup guide.', image: 'assets/one-axis-features.png', heroImage: 'assets/first-morning.png', alt: 'One Axis mobile services overview', showCard: false,
+      transcript: [{ part: 0, paragraphs: [
+        'Welcome to the One Axis application setup guide.',
+        'One Axis is your employee companion, bringing together important employee services, personal information, attendance, leave, payroll, benefits, and HR policies in one place.',
+        'Let\'s begin by setting up the application on your mobile device.'
+      ] }]
+    },
+    {
+      id: 'intune', index: 1, number: '02', kicker: 'SET UP YOUR WORK PROFILE', navTitle: 'Intune setup', title: 'Start with Company Portal.', heroTitle: 'Start with<br><em>Company Portal.</em>', heroKicker: 'SET UP YOUR WORK PROFILE', heroDeck: 'Download Intune Company Portal, sign in with your AD credentials, and complete work profile setup.',
+      image: 'assets/one-axis-setup-overview.png', heroImage: 'assets/first-morning.png', alt: 'One Axis guide setup overview with Company Portal instructions', caption: 'One Axis app guide · Setup overview',
+      summary: 'Follow the steps in order. The latest One Axis app is installed automatically in your Work Profile after registration.',
+      transcript: [{ part: 0, paragraphs: [
+        'First, download Intune Company Portal from the Google Play Store or Apple App Store.',
+        'Once the installation is complete, open Company Portal and sign in using your AD credentials.',
+        'Follow the instructions displayed on your screen to complete the registration and work profile setup.',
+        'Once the registration is successful, the latest version of the One Axis application will be installed automatically in your device\'s Work Profile.'
+      ] }],
+      steps: [
+        'Download Intune Company Portal from the Google Play Store or Apple App Store.',
+        'Open Company Portal and sign in using your AD credentials.',
+        'Follow the on-screen instructions to complete registration and work profile setup.',
+        'The latest One Axis app will install automatically in your device’s Work Profile.'
+      ],
+      noteTitle: 'On your phone', note: 'The One Axis app is installed automatically after Company Portal registration succeeds.'
+    },
+    {
+      id: 'first-registration', index: 2, number: '03', kicker: 'FIRST-TIME REGISTRATION', navTitle: 'First registration', title: 'Create your six-digit MPIN.', heroTitle: 'A few steps to<br><em>make it yours.</em>', heroKicker: 'FIRST-TIME REGISTRATION', heroDeck: 'Choose New User, verify your registered mobile number, then create your MPIN.',
+      image: 'assets/one-axis-overview.png', heroImage: 'assets/scene-customer.png', alt: 'One Axis overview showing the New User registration option', caption: 'One Axis app guide · Generate One Axis PIN',
+      images: [
+        { src: 'assets/one-axis-overview.png', alt: 'One Axis overview showing New User registration', caption: 'New User route' },
+        { src: 'assets/one-axis-mpin.png', alt: 'Set New MPIN screens shown in the supplied guide', caption: 'MPIN screens' }
+      ],
+      summary: 'Use the registered details associated with your employee account.',
+      transcript: [{ part: 0, paragraphs: [
+        'Now that the application is installed, let\'s move on to your first-time registration.',
+        'Open the One Axis application.',
+        'If you are accessing the application for the first time, select the New User option.',
+        'You will be guided through the registration process.',
+        'Enter your Employee Code and registered mobile number in the respective fields.',
+        'Next, create your six-digit MPIN. This MPIN will be used to access the One Axis application in the future.',
+        'Carefully review and accept the displayed Terms and Conditions, then select Submit.',
+        'An OTP will be sent to your registered mobile number for verification.',
+        'Enter the OTP and complete the verification process.',
+        'Once your registration is successful, your MPIN will be ready to use.'
+      ] }],
+      steps: [
+        'Open One Axis and select New User.',
+        'Enter your Employee Code and registered mobile number.',
+        'Create a six-digit MPIN.',
+        'Review and accept the displayed Terms and Conditions, then select Submit.',
+        'Enter the OTP sent to your registered mobile number and complete verification.'
+      ],
+      noteTitle: 'On the screen', note: 'The overview labels this action NEW USER?.'
+    },
+    {
+      id: 'new-device', index: 3, number: '04', kicker: 'REGISTER ANOTHER DEVICE', navTitle: 'New device', title: 'Register a new phone.', heroTitle: 'A new device?<br><em>Register it first.</em>', heroKicker: 'REGISTER ANOTHER DEVICE', heroDeck: 'Use Having Trouble, then choose Register New Device.',
+      image: 'assets/one-axis-device-registration.png', heroImage: 'assets/scene-open.png', alt: 'One Axis Register New Device steps and mobile screens', caption: 'Register New Device · Reference mobile screens',
+      summary: 'Follow the verification instructions displayed in One Axis to complete registration.',
+      transcript: [{ part: 0, paragraphs: [
+        'Now, let\'s look at device registration.',
+        'If you are using a new mobile device, or need to register another device, open the application and select the Having Trouble option.',
+        'Choose Register New Device and follow the verification instructions displayed on your screen to complete the registration.',
+        'Once your device is registered, you can proceed to access the application.'
+      ] }],
+      steps: [
+        'Open One Axis and select Having Trouble.',
+        'Choose Register New Device.',
+        'Enter your Employee ID, mobile number, and new six-digit MPIN. Confirm the MPIN and accept the Terms and Conditions, then select Submit.',
+        'Verify the OTP sent to your registered mobile number.',
+        'Continue once the new device is registered successfully.'
+      ],
+      noteTitle: 'On your phone', note: 'The screenshots show the exact Register New Device screens. Follow the prompts as they appear.'
+    },
+    {
+      id: 'access', index: 4, number: '05', kicker: 'LOG IN AND RESTORE ACCESS', navTitle: 'Access help', title: 'Get back into One Axis.', heroTitle: 'Access, reset,<br><em>or unblock.</em>', heroKicker: 'LOG IN AND RESTORE ACCESS', heroDeck: 'Log in with your Employee ID and MPIN. Use Having Trouble if you need to recover access.',
+      image: 'assets/one-axis-mpin.png', heroImage: 'assets/scene-team.png', alt: 'One Axis MPIN support screens', caption: 'Set New MPIN · Reference mobile screens',
+      images: [
+        { src: 'assets/one-axis-mpin.png', alt: 'One Axis Set New MPIN support screens', caption: 'Set New MPIN' },
+        { src: 'assets/one-axis-unblock.png', alt: 'One Axis Unblock MPIN screens, including the Unblock Account button', caption: 'Unblock MPIN / Unblock Account' }
+      ],
+      summary: 'Follow the prompts shown in the supplied screens to reset your MPIN or restore a blocked account.',
+      transcript: [{ part: 0, paragraphs: [
+        'To log in, open One Axis and enter your Employee ID along with your six-digit MPIN.',
+        'After successful authentication, you will be taken to the application dashboard.',
+        'If you forget your MPIN, don\'t worry. Select the Having Trouble option and choose Reset MPIN.',
+        'Follow the verification process displayed on your screen to reset your MPIN and regain access.',
+        'Similarly, if your account gets blocked, select the Unblock Account option and follow the displayed instructions to restore access.'
+      ] }],
+      steps: [
+        'Log in with your Employee ID and six-digit MPIN.',
+        'To reset a forgotten MPIN, select Having Trouble. The supplied screen shows Set New MPIN.',
+        'Enter your Employee ID and mobile number, create and confirm a new six-digit MPIN, accept the Terms and Conditions, and submit.',
+        'Verify the OTP sent to your registered mobile number and confirm the reset success message.',
+        'To unblock a blocked account, select Unblock Account. Enter your Employee ID and mobile number, create and confirm a new six-digit MPIN, accept the Terms and Conditions, and submit. Verify the OTP and confirm the success message.'
+      ],
+      noteTitle: 'Labels shown in your guide', note: 'The overview calls the login field Employee Code; the narration says Employee ID. The narration says Reset MPIN, while the supplied screen shows HAVING TROUBLE? and Set New MPIN. The unblock button reads Unblock Account.'
+    },
+    {
+      id: 'employee-services', index: 5, number: '06', kicker: 'EXPLORE EMPLOYEE SERVICES', navTitle: 'Employee services', title: 'Your workday, in one place.', heroTitle: 'One place for<br><em>your workday.</em>', heroKicker: 'EXPLORE EMPLOYEE SERVICES', heroDeck: 'My Profile, Leave and Attendance, Payroll and Benefits, Health and Wellness, Reimbursement, and Policies.',
+      image: 'assets/one-axis-features.png', heroImage: 'assets/scene-customer.png', alt: 'One Axis employee services shown around the mobile app', caption: 'One Axis app features · Reference overview',
+      summary: 'The guide introduces the services covered in your One Axis walkthrough.',
+      transcript: [
+        { part: 0, paragraphs: ['Now that you are familiar with accessing One Axis, let\'s explore the employee services available within the application.'] },
+        { part: 1, paragraphs: [
+          'Under My Profile, you can access your personal information, organisation information, identification details, and employment letters.',
+          'The Leave and Attendance section provides access to your leave balance, regularization records, leave records, and public holidays.',
+          'Under Payroll and Benefits, you can access your salary slips, Form 16, detailed payroll information, investment declarations, flexi-pay, bank detail updates, retiral benefits, and VPF declarations.',
+          'The Health and Wellness section provides access to benefit details, claim status, and nominations.',
+          'Under Reimbursement, you can apply for reimbursements and track your reimbursement history and status.',
+          'You can also access important HR policies and employee declarations through the Policies and Declarations section.'
+        ] }
+      ],
+      steps: [
+        'My Profile: personal information, organisation information, identification details, and employment letters.',
+        'Leave and Attendance: leave balance, regularization records, leave records, and public holidays.',
+        'Payroll and Benefits: salary slips, Form 16, payroll details, investment declarations, flexi-pay, bank detail updates, retiral benefits, and VPF declarations.',
+        'Health and Wellness: benefit details, claim status, and nominations.',
+        'Reimbursement: apply and track reimbursement history and status.',
+        'Policies and Declarations: access HR policies and employee declarations.'
+      ]
+    },
+    {
+      id: 'attendance', index: 6, number: '07', kicker: 'ATTENDANCE AND LEAVE', navTitle: 'Attendance', title: 'Attendance follows your location.', heroTitle: 'Mark attendance<br><em>with One Axis.</em>', heroKicker: 'ATTENDANCE AND LEAVE', heroDeck: 'Open One Axis at your mapped base location. The guide also shows the attendance icon and regularization path.',
+      image: 'assets/one-axis-attendance.png', heroImage: 'assets/scene-open.png', alt: 'Attendance Marking instructions and One Axis mobile screens', caption: 'Attendance Marking · Reference mobile screens',
+      summary: 'Use the location setup and app actions described in the supplied attendance material.',
+      transcript: [{ part: 1, paragraphs: [
+        'Let\'s now understand how attendance works through One Axis.',
+        'Employees are mapped to their respective base locations, and each location has a defined geographical boundary.',
+        'When you open the One Axis application at your mapped base location, attendance is automatically captured according to the location-based setup.',
+        'You can also access attendance-related options through the Finger icon in the application.',
+        'If you need to correct a missed or incorrectly recorded attendance entry, navigate to the Leave and Attendance section.',
+        'Select the Regularization option and follow the instructions to raise a regularization request.',
+        'Choose the relevant date, provide the required details, and submit your request for approval.',
+        'Similarly, if you wish to apply for leave, navigate to Leave and Attendance and select Apply Leave.',
+        'Choose the appropriate leave dates, provide the required information, and submit your application for approval.',
+        'You can also track your leave and regularization records through the same section.'
+      ] }],
+      steps: [
+        'Open One Axis at your mapped base location. Attendance is automatically captured according to the location-based setup.',
+        'Select the Finger icon labelled “To mark attendance from Office” to open attendance-related options.',
+        'For a missed or incorrect entry, open Leave and Attendance and select Regularization.',
+        'Choose the relevant date, provide the required details, and submit for approval.',
+        'To apply for leave, choose Apply Leave, enter the dates and required information, and submit for approval.',
+        'Track leave and regularization records in the same section.'
+      ],
+      noteTitle: 'At your base location', note: 'The screenshots describe mapped locations and a defined geographical boundary for automatic capture.'
+    },
+    {
+      id: 'policies', index: 7, number: '08', kicker: 'HR POLICIES', navTitle: 'HR policies', title: 'Find policy guidance in My Space.', heroTitle: 'The right guidance,<br><em>when you need it.</em>', heroKicker: 'HR POLICIES', heroDeck: 'After logging in, navigate to My Space and select Policies.',
+      image: 'assets/one-axis-policy-access.png', heroImage: 'assets/scene-team.png', alt: 'One Axis policy access instructions and app screens', caption: 'How and where to access policies · Reference screens',
+      summary: 'Use the available HR-related policies whenever you need to refer to them.',
+      transcript: [{ part: 1, paragraphs: [
+        'Finally, let\'s look at where you can find HR policies.',
+        'After logging in, navigate to My Space and select Policies.',
+        'Here, you can access the available HR-related policies and refer to them whenever required.'
+      ] }],
+      steps: [
+        'Enter your Employee ID and MPIN to log in to One Axis.',
+        'In My Space, select the Policies tab.',
+        'Select the HR tab.',
+        'Open the available HR-related policy when you need to refer to it.'
+      ]
+    },
+    {
+      id: 'complete', index: 8, number: '09', kicker: 'YOUR ONE AXIS JOURNEY', navTitle: 'Finish', title: 'Your setup is complete.', heroTitle: 'Your One Axis setup<br><em>is complete.</em>', heroKicker: 'YOUR ONE AXIS JOURNEY', heroDeck: 'Take a few moments to explore the available sections and familiarise yourself with the features.',
+      image: 'assets/one-axis-features.png', heroImage: 'assets/first-morning.png', alt: 'Overview of One Axis employee services', caption: 'One Axis employee services',
+      transcript: [{ part: 1, paragraphs: [
+        'One Axis brings essential employee services together, helping you manage important aspects of your professional journey from a single application.',
+        'Take a few moments to explore the available sections and familiarise yourself with the features.',
+        'Your One Axis setup is now complete.',
+        'Welcome aboard, and all the best for your journey at Axis Bank.'
+      ] }]
+    }
+  ]
+};
+
+// Recreated app mockups use the guide's supplied labels and actions. These are
+// HTML screens so the narrated action can be highlighted without editing slides.
+const phoneDefaults = {
+  intune: { title: 'Work profile setup', eyebrow: 'COMPANY PORTAL', button: 'Continue', foot: 'Managed by Axis Bank' },
+  'first-registration': { title: 'New User', button: 'Submit', foot: 'Secure registration' },
+  'new-device': { title: 'Register New Device', button: 'Submit', foot: 'Device verification' },
+  access: { title: 'Having Trouble?', button: 'Continue', foot: 'Account access support' },
+  'employee-services': { title: 'Employee Services', eyebrow: 'GOOD MORNING', foot: 'Your workday, in one place' },
+  attendance: { title: 'Leave & Attendance', button: 'View attendance', foot: 'Mapped base location' },
+  policies: { title: 'My Space', button: 'Open HR policies', foot: 'Policies and Declarations' }
+};
+window.AXIS_STORY.sections.forEach(section => {
+  if (!phoneDefaults[section.id]) return;
+  const labels = {
+    intune: [
+      ['Download Company Portal', 'Google Play Store or Apple App Store'],
+      ['Sign in', 'Use your AD credentials'],
+      ['Complete setup', 'Follow the on-screen work profile instructions'],
+      ['One Axis installs', 'Latest app installs in your Work Profile']
+    ],
+    'first-registration': [
+      ['NEW USER?', 'First-time registration'], ['Employee Code', 'Enter your registered mobile number'],
+      ['Set New MPIN', 'Create and confirm a six-digit MPIN'], ['Terms & Conditions', 'Review, accept, then Submit'], ['OTP verification', 'Enter the OTP sent to your registered mobile']
+    ],
+    'new-device': [
+      ['HAVING TROUBLE?', 'Open the support options'], ['Register New Device', 'Choose this option'],
+      ['Employee ID + mobile', 'Create and confirm a six-digit MPIN'], ['Terms & Conditions', 'Accept and select Submit'], ['OTP verification', 'Verify the registered mobile number']
+    ],
+    access: [
+      ['Employee ID', 'Enter your six-digit MPIN to log in'], ['HAVING TROUBLE?', 'Open access support'],
+      ['Set New MPIN', 'Enter employee ID and registered mobile'], ['OTP verification', 'Confirm the reset'], ['Unblock Account', 'Follow prompts to restore access']
+    ],
+    'employee-services': [
+      ['My Profile', 'Personal and organisation information'], ['Leave and Attendance', 'Balances, records, holidays'],
+      ['Payroll and Benefits', 'Salary slips, Form 16, benefits'], ['Health and Wellness', 'Benefits, claims, nominations'],
+      ['Reimbursement', 'Apply and track status'], ['Policies and Declarations', 'Access HR policies']
+    ],
+    attendance: [
+      ['Mapped location', 'Attendance captures automatically within the defined boundary'], ['Finger icon', 'To mark attendance from Office'],
+      ['Leave and Attendance', 'Open the attendance options'], ['Regularization', 'Choose the date and submit for approval'],
+      ['Apply Leave', 'Enter dates and submit for approval'], ['Records', 'Track leave and regularization']
+    ],
+    policies: [
+      ['My Space', 'Open after logging in'], ['Policies', 'Select the Policies tab'], ['HR', 'Select the HR tab'], ['Available policies', 'Open a policy to refer to it']
+    ]
+  }[section.id];
+  section.phone = { ...phoneDefaults[section.id], rows: labels.map(([label, detail], i) => ({ label, detail, icon: ['◉', '⌕', '▣', '✓', '○', '⌂'][i % 6] })) };
+});

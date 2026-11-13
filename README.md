@@ -1,20 +1,18 @@
-# Axis Bank Guided Induction
+# Axis Bank New Joiner Induction
 
-A responsive, browser-only prototype for a guided employee induction experience.
+Two-page, scrolling induction website for new Axis Bank employees.
 
-## Open the prototype
+## Pages
 
-Open `index.html` in a modern browser. No build step, package install, account, or server is required.
+- `index.html` — cinematic induction story with the supplied two-part narration, scene transitions, sentence captions, chapter seeking, and saved playback position.
+- `one-axis.html` — introductory One Axis narration followed immediately by Intune work-profile setup, registration, account recovery, app areas, attendance, and policy guidance. Narration scrolls the page to each chapter; recreated phone mockups highlight the current action.
 
-## Included
+## Audio and script source
 
-- Welcome and culture introduction, followed by Account Opening, Mediclaim, Nomination, and One Axis.
-- An illustrated guide avatar with browser speech synthesis, captions, replay, pause/resume, and mute controls.
-- Sequential example forms with required-field checks and an on-screen review step.
-- Responsive layout, keyboard focus styles, reduced-motion support, and a higher-contrast toggle.
+The narration and matching scripts are in `voice and script/`. The supplied audio files have WAV data despite their `.mp3` extensions; website copies are named `.wav` in `assets/`. Until exact voice timings are supplied, scene and sentence cues are estimated from script word counts and recording duration. Use `AUDIO_TIMESTAMPS.md` to provide exact scene boundaries and One Axis phone action times; playback progress is saved separately for each page.
 
-## Demo boundary
+The One Axis page recreates the phone screens as HTML/CSS elements so narration can highlight individual actions. The source screenshots remain read-only references and are not displayed in the guide.
 
-Use sample details only. Entries and completion state stay in page memory and are cleared when the tab is refreshed or closed. The prototype does not submit, store, or transmit form data. Example fields are not approved bank forms. Follow official HR instructions for actual onboarding. The Nomination section avoids a deadline because the supplied references show conflicting timing.
+## Preview
 
-Speech uses the voice options available in the visitor’s browser and operating system. If speech synthesis is unavailable, the written captions remain visible.
+Open `index.html` in a modern browser and use the navigation to move between the two pages. No framework build step is required.

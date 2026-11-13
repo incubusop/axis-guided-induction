@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5f2">
+  <meta name="description" content="A narrated, screenshot-led guide to One Axis setup, account access, and attendance.">
+  <title>One Axis Setup | Axis Bank</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="guide-page">
+  <a class="skip-link" href="#intune">Skip to One Axis setup</a>
+  <header class="site-header site-header-light">
+    <a class="brand-lockup" href="index.html" aria-label="Axis Bank induction home"><span class="brand-symbol">A</span><span>AXIS BANK<small>NEW JOINER INDUCTION</small></span></a>
+    <nav aria-label="Main navigation"><a href="index.html">← Induction</a><a class="active" href="one-axis.html" aria-current="page">One Axis setup</a></nav>
+    <span class="header-note">THE PRACTICAL GUIDE <i>·</i> 02 / 02</span>
+  </header>
+
+  <main>
+    <section class="axis-hero story-hero" aria-labelledby="heroTitle">
+      <div class="hero-image" id="heroImage" role="img" aria-label="One Axis mobile app guide"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="hero-content">
+        <p class="eyebrow hero-eyebrow" id="heroKicker">THE PRACTICAL GUIDE <span>·</span> ONE AXIS</p>
+        <h1 id="heroTitle">One Axis,<br><em>step by step.</em></h1>
+        <p class="hero-deck" id="heroDeck">Welcome to the One Axis application setup guide.</p>
+        <a class="hero-link" href="#intune">Begin setup <span>↓</span></a>
+      </div>
+      <div class="hero-signature"><span>ONE AXIS</span><i></i><span>YOUR EMPLOYEE COMPANION</span></div>
+      <div class="hero-index"><span id="heroCurrent">01</span><i></i><span id="heroTotal">09</span></div>
+    </section>
+
+    <section class="guide-introduction">
+      <p class="eyebrow eyebrow-ink">ONE PLACE FOR YOUR WORKDAY</p>
+      <h2>Your employee<br><em>companion.</em></h2>
+      <p>One Axis is your employee companion, bringing together important employee services, personal information, attendance, leave, payroll, benefits, and HR policies in one place.</p>
+      <p class="intro-transition">Let's begin by setting up the application on your mobile device.</p>
+      <a class="button-dark" href="#intune">Start with Intune <span>↓</span></a>
+    </section>
+
+    <nav class="chapter-nav guide-chapter-nav" id="chapterNav" aria-label="One Axis guide chapters"></nav>
+    <section class="story-list guide-story-list" id="storyList" aria-label="One Axis setup and help chapters"></section>
+
+    <section class="security-reminder">
+      <span class="security-mark">!</span>
+      <div><p class="eyebrow eyebrow-ink">KEEP YOUR ACCOUNT SECURE</p><h2>Your credentials<br><em>stay with you.</em></h2><p>Enter your AD credentials, MPIN, and OTP only in Company Portal or the One Axis app when prompted. Never share them with anyone or enter them in this guide.</p></div>
+    </section>
+
+    <section class="guide-finish">
+      <p class="eyebrow">YOU’RE READY TO EXPLORE</p>
+      <h2>Your One Axis setup<br><em>is complete.</em></h2>
+      <p>Take a few moments to explore the available sections and familiarise yourself with the features.</p>
+      <a class="button-light" href="index.html">← Return to your first day</a>
+    </section>
+  </main>
+
+  <audio id="audioPart0" preload="metadata" src="assets/oneaxis-part1.wav"></audio>
+  <audio id="audioPart1" preload="metadata" src="assets/oneaxis-part2.wav"></audio>
+  <div class="image-dialog" id="imageDialog" hidden role="dialog" aria-modal="true" aria-label="Expanded One Axis reference screen">
+    <button type="button" class="dialog-close" id="dialogClose" aria-label="Close expanded image">×</button>
+    <img id="dialogImage" alt="">
+  </div>
+  <aside class="guide-helper" aria-label="One Axis guide helper">
+    <section class="helper-panel" id="helperPanel" hidden>
+      <div class="helper-heading"><span class="helper-spark">✦</span><div><strong>One Axis guide helper</strong><small>Choose a topic for the steps</small></div><button type="button" id="helperClose" aria-label="Close guide helper">×</button></div>
+      <div class="helper-messages" id="helperMessages" aria-live="polite"><p class="helper-message">I can repeat the instructions from this guide. Choose a topic below.</p></div>
+      <div class="helper-choices" id="helperChoices"></div>
+      <p class="helper-privacy">Never share your AD password, MPIN, or OTP here.</p>
+    </section>
+    <button type="button" class="helper-toggle" id="helperToggle" aria-expanded="false" aria-controls="helperPanel"><span>✦</span> Need a hand? <i>+</i></button>
+  </aside>
+  <aside class="audio-dock light-dock" aria-label="One Axis narration player">
+    <div class="dock-caption"><span class="sound-dot" aria-hidden="true"></span><div><span class="dock-chapter" id="dockChapter">01 · INTRODUCTION</span><p id="liveCaption" aria-live="polite">Press play to follow the One Axis setup guide.</p></div></div>
+    <div class="dock-controls">
+      <button type="button" class="icon-button" id="backChapter" aria-label="Previous chapter">↶</button>
+      <button type="button" class="play-button" id="playToggle" aria-label="Play One Axis guide"><span id="playIcon">▶</span></button>
+      <button type="button" class="icon-button" id="forwardChapter" aria-label="Next chapter">↷</button>
+      <span class="audio-time" id="audioClock">00:00 <i>/</i> 05:01</span>
+    </div>
+    <div class="dock-timeline"><div class="dock-progress" id="dockProgress"></div><input type="range" id="audioSeek" min="0" max="100" step="0.1" value="0" aria-label="Seek through One Axis narration"></div>
+    <button type="button" class="cc-button is-on" id="captionToggle" aria-pressed="true" aria-label="Turn captions off">CC</button>
+    <span class="resume-label" id="resumeLabel">Ready when you are</span>
+  </aside>
+  <script src="app.js"></script>
+  <script src="story-player.js"></script>
+</body>
+</html>

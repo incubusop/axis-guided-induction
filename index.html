@@ -3,61 +3,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#97144d">
-  <meta name="description" content="A guided Axis Bank employee induction and onboarding prototype.">
-  <title>Axis Bank | Guided Induction</title>
+  <meta name="theme-color" content="#170d13">
+  <meta name="description" content="A cinematic welcome to Axis Bank, told through the induction voiceover and story.">
+  <title>Your First Day | Axis Bank</title>
+  <link rel="preload" as="image" href="assets/first-morning.png">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <div class="app-shell">
-    <aside class="sidebar" aria-label="Induction navigation">
-      <a class="brand" href="#home" aria-label="Axis Bank induction home">
-        <span class="axis-mark" aria-hidden="true"><i></i><b></b><em></em></span>
-        <span class="brand-copy"><strong>AXIS BANK</strong><small>PEOPLE EXPERIENCE</small></span>
-      </a>
-      <div class="journey-label"><span>YOUR JOURNEY</span><span id="journeyCount">01 / 05</span></div>
-      <nav id="journeyNav" class="journey-nav"></nav>
-      <div class="sidebar-bottom">
-        <div class="help-card"><span class="help-icon">?</span><div><strong>Need a hand?</strong><p>Your induction guide is here to help, one step at a time.</p></div></div>
-        <div class="confidential"><span class="lock-icon">▣</span> Demo experience · No data is saved</div>
+<body class="film-page">
+  <a class="skip-link" href="#chapters">Skip to the induction story</a>
+  <header class="site-header site-header-dark">
+    <a class="brand-lockup" href="index.html" aria-label="Axis Bank induction home"><span class="brand-symbol">A</span><span>AXIS BANK<small>NEW JOINER INDUCTION</small></span></a>
+    <nav aria-label="Main navigation"><a class="active" href="index.html" aria-current="page">Induction</a><a href="one-axis.html">One Axis setup <span>↗</span></a></nav>
+    <span class="header-note">YOUR FIRST DAY, IN MOTION</span>
+  </header>
+
+  <main>
+    <section class="story-hero film-hero" aria-labelledby="heroTitle">
+      <div class="hero-image" id="heroImage" role="img" aria-label="A new colleague arriving at the office in the morning"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="hero-content">
+        <p class="eyebrow hero-eyebrow" id="heroKicker">A FIRST DAY FILM <span>·</span> 01 / 07</p>
+        <h1 id="heroTitle">Every first day<br><em>opens a door.</em></h1>
+        <p class="hero-deck" id="heroDeck">A new place, full of people, purpose, and possibility.</p>
+        <a class="hero-link" href="#chapters">Follow the story <span>↓</span></a>
       </div>
-    </aside>
+      <div class="hero-signature"><span>AXIS BANK</span><i></i><span>PEOPLE EXPERIENCE</span></div>
+      <div class="hero-index"><span id="heroCurrent">01</span><i></i><span id="heroTotal">07</span></div>
+    </section>
 
-    <main class="main-area">
-      <header class="topbar">
-        <div class="breadcrumbs"><span>People experience</span><span class="crumb-slash">/</span><strong>New joiner induction</strong></div>
-        <div class="topbar-right"><span class="secure-pill"><span class="secure-dot"></span>Guided experience</span><button class="icon-button" id="contrastBtn" type="button" aria-label="Toggle higher contrast" title="Toggle higher contrast">◐</button><div class="profile"><span class="profile-avatar">A</span><span class="profile-name">New joiner</span><span class="chevron">⌄</span></div></div>
-      </header>
+    <section class="chapter-intro" id="chapters">
+      <div><p class="eyebrow eyebrow-ink">A WELCOME THAT MOVES WITH YOU</p><h2>One story.<br><em>Seven moments.</em></h2></div>
+      <p>The film follows the voice you provided. Play from the beginning, jump to a chapter, or pick up where you left off.</p>
+    </section>
 
-      <section class="welcome-strip" id="welcomeStrip">
-        <div class="welcome-copy"><div class="eyebrow light-eyebrow"><span class="sparkle">✦</span> YOUR FIRST DAYS, MADE SIMPLE</div><h1>Welcome to Axis Bank.</h1><p>A thoughtful start to your journey. We’ll take this one step at a time.</p><div class="welcome-meta"><span><i class="meta-icon">◷</i> About 15 minutes</span><span class="meta-divider"></span><span><i class="meta-icon">▤</i> 5 guided sections</span></div></div>
-        <div class="welcome-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-sun"></div><div class="art-figure"><span class="figure-head"></span><span class="figure-body"></span><span class="figure-arm"></span></div><div class="art-leaf leaf-one"></div><div class="art-leaf leaf-two"></div><div class="art-star">✦</div></div>
-      </section>
+    <nav class="chapter-nav" id="chapterNav" aria-label="Induction chapters"></nav>
+    <section class="story-list" id="storyList" aria-label="Induction story chapters"></section>
 
-      <div class="content-grid">
-        <section class="content-column" aria-live="polite">
-          <div class="section-intro"><div><div class="eyebrow" id="sectionKicker">START HERE</div><h2 id="sectionTitle">A warm welcome, and a clear path.</h2><p class="section-subtitle" id="sectionSubtitle">Get to know the way we work, then move through your essential onboarding forms with support at every step.</p></div><div class="section-time"><span class="time-dot"></span><span id="sectionTime">3 min</span></div></div>
-          <div id="stepDots" class="step-dots" aria-label="Progress through this section"></div>
-          <article class="step-card" id="stepContent"></article>
-          <div class="form-footer"><div class="form-assurance"><span class="shield">✓</span><span>Your progress stays in this tab only.<br><b>This demo never saves or sends your details.</b></span></div><div class="step-actions"><button class="button button-quiet" id="backBtn" type="button">← Back</button><button class="button button-primary" id="nextBtn" type="button">Let’s begin <span>→</span></button></div></div>
-        </section>
+    <section class="story-outro">
+      <p class="eyebrow">THE NEXT CHAPTER</p>
+      <h2>Now, let’s get<br><em>you set up.</em></h2>
+      <p>Continue with the One Axis mobile setup guide.</p>
+      <a class="button-light" href="one-axis.html">Continue to One Axis <span>↗</span></a>
+    </section>
+  </main>
 
-        <aside class="guide-column" aria-label="Your induction guide">
-          <div class="guide-card">
-            <div class="guide-heading"><div><div class="eyebrow">YOUR PERSONAL GUIDE</div><h3>Meet Aanya</h3></div><span class="online-status"><i></i> Here with you</span></div>
-            <div class="avatar-stage"><div class="avatar-glow"></div><div class="avatar-orbit"></div><div class="avatar"><div class="avatar-hair"></div><div class="avatar-face"><span class="eye eye-left"></span><span class="eye eye-right"></span><span class="nose"></span><span class="smile"></span></div><div class="avatar-neck"></div><div class="avatar-shirt"><span class="shirt-collar"></span></div><div class="avatar-blazer"></div></div><div class="avatar-spark spark-a">✦</div><div class="avatar-spark spark-b">✧</div><div class="voice-wave" id="voiceWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-            <div class="guide-message"><span class="quote-mark">“</span><p id="guideScript">Hello, and welcome. I’m Aanya. I’ll walk alongside you through your induction, at a pace that feels comfortable.</p></div>
-            <div class="voice-controls"><button id="playVoice" class="voice-play" type="button" aria-label="Play guide narration"><span id="playIcon">▶</span><span id="playLabel">Listen to Aanya</span></button><button id="repeatVoice" class="voice-control" type="button" aria-label="Repeat narration" title="Repeat narration">↻</button><button id="muteVoice" class="voice-control" type="button" aria-label="Mute narration" title="Mute narration">◖</button></div>
-            <div class="voice-note"><span class="captions-icon">▤</span> Captions are always on <span class="voice-note-right">Calm voice · English</span></div>
-          </div>
-          <div class="guide-tip"><span class="tip-spark">✦</span><p><strong>No rush.</strong> You can pause, revisit a step, or ask your HR contact for help at any time.</p></div>
-          <div class="need-help"><span class="help-bubble">↗</span><span>Questions about a form?</span><a href="#help" id="helpLink">Contact HR <span>→</span></a></div>
-        </aside>
-      </div>
-      <footer class="page-footer"><span>Axis Bank · Employee induction</span><span>For guidance only · Follow official HR instructions for approved forms and policies</span></footer>
-    </main>
+  <audio id="audioPart0" preload="metadata" src="assets/induction-part1.wav"></audio>
+  <audio id="audioPart1" preload="metadata" src="assets/induction-part2.wav"></audio>
+  <div class="image-dialog" id="imageDialog" hidden role="dialog" aria-modal="true" aria-label="Expanded reference screen">
+    <button type="button" class="dialog-close" id="dialogClose" aria-label="Close expanded image">×</button>
+    <img id="dialogImage" alt="">
   </div>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="app.js"></script>
+  <aside class="audio-dock" aria-label="Induction audio player">
+    <div class="dock-caption"><span class="sound-dot" aria-hidden="true"></span><div><span class="dock-chapter" id="dockChapter">01 · THE FIRST MORNING</span><p id="liveCaption" aria-live="polite">Press play to begin your induction.</p></div></div>
+    <div class="dock-controls">
+      <button type="button" class="icon-button" id="backChapter" aria-label="Previous chapter">↶</button>
+      <button type="button" class="play-button" id="playToggle" aria-label="Play induction"><span id="playIcon">▶</span></button>
+      <button type="button" class="icon-button" id="forwardChapter" aria-label="Next chapter">↷</button>
+      <span class="audio-time" id="audioClock">00:00 <i>/</i> 02:44</span>
+    </div>
+    <div class="dock-timeline"><div class="dock-progress" id="dockProgress"></div><input type="range" id="audioSeek" min="0" max="100" step="0.1" value="0" aria-label="Seek through induction narration"></div>
+    <button type="button" class="cc-button is-on" id="captionToggle" aria-pressed="true" aria-label="Turn captions off">CC</button>
+    <span class="resume-label" id="resumeLabel">Ready when you are</span>
+  </aside>
+  <script src="induction.js"></script>
+  <script src="story-player.js"></script>
 </body>
 </html>
