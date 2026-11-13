@@ -363,6 +363,7 @@
       if (!button) return;
       const section = data.sections.find(item => item.index === Number(button.dataset.helpScene));
       if (!section) return;
+      pauseAll();
       helperMessages.innerHTML = `<p class="helper-you">${section.navTitle || section.title}</p><p class="helper-message"><strong>${section.title}</strong></p><ol>${section.steps.map(step => `<li>${step}</li>`).join('')}</ol>`;
       setScene(section.index, { scroll: true, force: true });
     });
